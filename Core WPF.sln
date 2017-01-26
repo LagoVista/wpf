@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{130ED3D2-FAD9-4BE5-8D71-F827A0856660}"
+	ProjectSection(SolutionItems) = preProject
+		BuildAll.ps1 = BuildAll.ps1
+		CreateLocalPackages.ps1 = CreateLocalPackages.ps1
+		LICENSE = LICENSE
+		PublishRemotePackages.ps1 = PublishRemotePackages.ps1
+		README.md = README.md
+		UpdateNuspecVersion.ps1 = UpdateNuspecVersion.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7E766088-4C09-41EE-A890-51E991BFACED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF Support", "src\LagoVista.Core.WPF\WPF Support.csproj", "{8012CA72-39A5-43D8-9476-BED0F1DBE6D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8012CA72-39A5-43D8-9476-BED0F1DBE6D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8012CA72-39A5-43D8-9476-BED0F1DBE6D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8012CA72-39A5-43D8-9476-BED0F1DBE6D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8012CA72-39A5-43D8-9476-BED0F1DBE6D9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8012CA72-39A5-43D8-9476-BED0F1DBE6D9} = {7E766088-4C09-41EE-A890-51E991BFACED}
+	EndGlobalSection
+EndGlobal
