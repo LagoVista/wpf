@@ -2,6 +2,7 @@
 using LagoVista.Core.PlatformSupport;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,9 +23,9 @@ namespace LagoVista.Core.WPF.PlatformSupport
 
         public void Dispose()
         {
-            lock(this)
+            lock (this)
             {
-                if(_timer != null)
+                if (_timer != null)
                 {
                     _timer.Dispose();
                     _timer = null;
@@ -36,7 +37,17 @@ namespace LagoVista.Core.WPF.PlatformSupport
         {
             if(InvokeOnUIThread)
             {
-                SLWIOC.Get<IDispatcherServices>().Invoke(() => Tick?.Invoke(this, null));
+                Object objDispatcher;
+
+                if (SLWIOC.TryResolve(typeof(IDispatcherServices), out objDispatcher))
+                {
+                    var dispatcher = objDispatcher as IDispatcherServices;
+                    dispatcher.Invoke(() => Tick?.Invoke(this, null));
+                }
+                else
+                {
+                    throw new Exception("To invoke timer on UI thread you must register a type for IDispatcherService for your current platform.  This is usually done by calling [Platform]Serivces.Init(Dispatcher) for you platform.");
+                }
             }
             else
             {
@@ -46,7 +57,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
 
         public void Start()
         {
-            _timer = new System.Threading.Timer(Timer_Elapsed,null, 0, Interval.Milliseconds);
+            _timer = new System.Threading.Timer(Timer_Elapsed, null, 0, Convert.ToInt32(Interval.TotalMilliseconds));
         }
 
         public void Stop()

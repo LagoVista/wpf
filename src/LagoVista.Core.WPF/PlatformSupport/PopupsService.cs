@@ -1,6 +1,9 @@
-﻿using LagoVista.Core.PlatformSupport;
+﻿using LagoVista.Core.IOC;
+using LagoVista.Core.PlatformSupport;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,37 +26,41 @@ namespace LagoVista.Core.WPF.PlatformSupport
             return tcs.Task;
         }
 
-        public Task<decimal?> PromptForDecimalAsync(string label,  decimal? defaultvalue = 0, string help = "", bool isRequried = false)
+        public Task<double?> PromptForDoubleAsync(string label,  double? defaultvalue = 0, string help = "", bool isRequried = false)
         {
-            var tcs = new TaskCompletionSource<Decimal?>();
             var promptWindow = new UI.PromptDialog<decimal>();
             promptWindow.Title = label;
             promptWindow.Help = help;
             promptWindow.isRequired = isRequried;
-            promptWindow.DecimalVaue = defaultvalue;
-            promptWindow.Show();
-            promptWindow.Closed += (sndr, args) =>
+            promptWindow.DoubleValue = defaultvalue;
+            var result = promptWindow.ShowDialog();
+            if(result.HasValue && result.Value)
             {
-                tcs.SetResult(promptWindow.DecimalVaue);
-            };
-            return tcs.Task;
+                return Task.FromResult(promptWindow.DoubleValue);
+            }
+            else
+            {
+                return Task.FromResult(defaultvalue);
+            }
         }
 
         public Task<int?> PromptForIntAsync(string label, int? defaultvalue = 0, string help = "", bool isRequried = false)
         {
-            var tcs = new TaskCompletionSource<int?>();
             var promptWindow = new UI.PromptDialog<int>();
             promptWindow.Title = label;
             promptWindow.Help = help;
             promptWindow.isRequired = isRequried;
             promptWindow.IntValue = defaultvalue;
-            promptWindow.Show();
-            promptWindow.Closed += (sndr, args) =>
+            
+            var result = promptWindow.ShowDialog();
+            if (result.HasValue && result.Value)
             {
-                tcs.SetResult(promptWindow.IntValue);
-            };
-
-            return tcs.Task;
+                return Task.FromResult(promptWindow.IntValue);
+            }
+            else
+            {
+                return Task.FromResult(defaultvalue);
+            }
         }
 
         public Task<string> PromptForStringAsync(string label, string defaultvalue = "", string help = "", bool isRequried = false)
@@ -64,13 +71,15 @@ namespace LagoVista.Core.WPF.PlatformSupport
             promptWindow.Help = help;
             promptWindow.isRequired = isRequried;
             promptWindow.StringValue = defaultvalue;
-            promptWindow.Show();
-            promptWindow.Closed += (sndr, args) =>
+            var result = promptWindow.ShowDialog();
+            if (result.HasValue && result.Value)
             {
-                tcs.SetResult(promptWindow.StringValue);
-            };
-
-            return tcs.Task;
+                return Task.FromResult(promptWindow.StringValue);
+            }
+            else
+            {
+                return Task.FromResult(defaultvalue);
+            }
         }
 
         public Task ShowAsync(string message)
@@ -99,14 +108,112 @@ namespace LagoVista.Core.WPF.PlatformSupport
             return tcs.Task;
         }
 
-        public Task<string> ShowOpenFileAsync(string fileMask = "")
+        private string _lastOpenDirectory;
+        private string _lastSaveDirectory;
+
+        public async Task<string> ShowOpenFileAsync(string fileMask = "")
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrEmpty(_lastOpenDirectory))
+            {
+                Object obj;
+                if (SLWIOC.TryResolve(typeof(IStorageService), out obj))
+                {
+                    var storage = obj as IStorageService;
+                    _lastOpenDirectory = await storage.GetKVPAsync<string>("LAST_BROWSED_OPEN_DIRECTORY");
+                }
+            }
+
+            var openFileDialog = new OpenFileDialog();
+            if(!String.IsNullOrEmpty(fileMask))
+            {
+                openFileDialog.Filter = fileMask;
+            }
+            else
+            {
+                openFileDialog.Filter = "All Files|*.*";
+            }
+
+            if(!String.IsNullOrEmpty(_lastOpenDirectory))
+            {
+                openFileDialog.InitialDirectory = _lastOpenDirectory;
+            }
+            else
+            {
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            }
+
+            var result = openFileDialog.ShowDialog();
+            if(result.HasValue && result.Value)
+            {
+                var fn = openFileDialog.FileName;
+                var fileInfo = new FileInfo(openFileDialog.FileName);
+                _lastOpenDirectory = fileInfo.DirectoryName;
+                Object obj;
+                if (SLWIOC.TryResolve(typeof(IStorageService), out obj))
+                {
+                    var storage = obj as IStorageService;
+                    await storage.StoreKVP("LAST_BROWSED_OPEN_DIRECTORY", _lastOpenDirectory);
+                }
+
+                return fn;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
-        public Task<string> ShowSaveFileAsync(string defaultFileName = "", string fileMask = "")
+        public async Task<string> ShowSaveFileAsync(string defaultFileName = "", string fileMask = "")
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrEmpty(_lastSaveDirectory))
+            {
+                Object obj;
+                if (SLWIOC.TryResolve(typeof(IStorageService), out obj))
+                {
+                    var storage = obj as IStorageService;
+                    _lastSaveDirectory = await storage.GetKVPAsync<string>("LAST_BROWSED_SAVE_DIRECTORY");
+                }
+            }
+
+            var saveFileDialog = new SaveFileDialog();
+            if (!String.IsNullOrEmpty(fileMask))
+            {
+                saveFileDialog.Filter = fileMask;
+            }
+            else
+            {
+                saveFileDialog.Filter = "All Files|*.*";
+            }
+
+            if (!String.IsNullOrEmpty(_lastSaveDirectory))
+            {
+                saveFileDialog.InitialDirectory = _lastSaveDirectory;
+            }
+            else
+            {
+                saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            }
+
+            var result = saveFileDialog.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                var fn = saveFileDialog.FileName;
+                var fileInfo = new FileInfo(saveFileDialog.FileName);
+                _lastSaveDirectory = fileInfo.DirectoryName;
+                Object obj;
+                if (SLWIOC.TryResolve(typeof(IStorageService), out obj))
+                {
+                    var storage = obj as IStorageService;
+                    await storage.StoreKVP("LAST_BROWSED_SAVE_DIRECTORY", _lastSaveDirectory);
+                }
+
+                return fn;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

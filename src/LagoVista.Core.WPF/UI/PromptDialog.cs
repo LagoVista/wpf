@@ -35,7 +35,7 @@ namespace LagoVista.Core.WPF.UI
             okButton.SetValue(Grid.ColumnProperty, 1);
             okButton.SetValue(Grid.RowProperty, 2);
             container.Children.Add(okButton);
-            okButton.Click += (sndr, args) => { if (IsValid) Close(); };
+            okButton.Click += OkButton_Click;
 
             Button cancelButton = new Button();
             cancelButton.Margin = new Thickness(4);
@@ -43,18 +43,22 @@ namespace LagoVista.Core.WPF.UI
             cancelButton.SetValue(Grid.ColumnProperty, 2);
             cancelButton.SetValue(Grid.RowProperty, 2);
             container.Children.Add(cancelButton);
-            cancelButton.Click += (sndr, args) => Close();
+            cancelButton.Click += (sndr, args) => { DialogResult = false; Close(); };
 
             _help = new TextBlock();
-            _help.SetValue(Grid.ColumnSpanProperty, 2);
+            _help.Margin = new Thickness(8);
+            _help.SetValue(Grid.ColumnSpanProperty, 3);
             _help.Visibility = Visibility.Collapsed;
             container.Children.Add(_help);
 
             _textInput = new TextBox();
             _textInput.SetValue(Grid.RowProperty, 1);
-            _textInput.SetValue(Grid.ColumnSpanProperty, 2);
-            _textInput.Margin = new Thickness(4);
+            _textInput.SetValue(Grid.ColumnSpanProperty, 3);
+            _textInput.Margin = new Thickness(8);
             container.Children.Add(_textInput);
+
+            this.WindowStyle = WindowStyle.ToolWindow;
+
 
             if (typeof(T) == typeof(int))
             {
@@ -66,6 +70,29 @@ namespace LagoVista.Core.WPF.UI
             {
                 _textInput.TextAlignment = TextAlignment.Right;
                 Masking.SetMask(_textInput, @"^[0-9]+\.?([0-9][0-9]?)?$");
+            }
+        }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsValid)
+            {
+                DialogResult = true; Close();
+            }
+            else
+            {
+                if (typeof(T) == typeof(int))
+                {
+                    MessageBox.Show("Please enter a valid number.");
+                }
+                else if (typeof(T) == typeof(decimal))
+                {
+                    MessageBox.Show("Please enter a valid decimal.");
+                }
+                else if (typeof(T) == typeof(string))
+                {
+                    MessageBox.Show("Please enter a valid string.");
+                }
             }
         }
 
@@ -85,7 +112,7 @@ namespace LagoVista.Core.WPF.UI
                 }
                 else
                 {
-                    Height = 140;
+                    Height = 130;
                     _help.Visibility = Visibility.Visible;
                 }
             }
@@ -137,12 +164,12 @@ namespace LagoVista.Core.WPF.UI
             set { _textInput.Text = value; }
         }
 
-        public Decimal? DecimalVaue
+        public Double? DoubleValue
         {
             get
             {
-                decimal val;
-                if (decimal.TryParse(_textInput.Text, out val))
+                Double val;
+                if (Double.TryParse(_textInput.Text, out val))
                     return val;
                 else
                     return null;

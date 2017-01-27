@@ -15,6 +15,11 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80" />
@@ -34,5 +39,13 @@
         <TextBlock  Grid.Column="1" Grid.Row="5" Text="Open File: - " x:Name="OpenFileResult"/>
         <Button Content="Save File" Grid.Row="6" x:Name="SaveFile" Click="SaveFile_Click" />
         <TextBlock  Grid.Column="1" Grid.Row="6" Text="Save File: - " x:Name="SaveFileResult"/>
+        <Button Grid.Row="7" Content="Decimal Req" x:Name="SetDecimalRequired" Click="SetDecimalRequired_Click" />
+        <TextBlock  Grid.Row="7" Grid.Column="1" Text="Decimal Result: - " x:Name="SetDecimalResultRequried"/>
+        <Button Grid.Row="8" Content="Get Ports" x:Name="GetSerialPorts" Click="GetSerialPorts_Click" />
+        <TextBlock  Grid.Row="8" Grid.Column="1" Text="Decimal Result: - " x:Name="GetSerialPortResults"/>
+        <Button Grid.Row="9" Content="Open Port" x:Name="OpenPort" Click="OpenPort_Click" />
+        <TextBlock  Grid.Row="9" Grid.Column="1" Text="Decimal Result: - " x:Name="OpenPortResult"/>
+        <Button Grid.Row="10" Content="Close Port" x:Name="ClosePort" Click="ClosePort_Click" />
+        <TextBlock  Grid.Row="10" Grid.Column="1" Text="Decimal Result: - " x:Name="ClosePortResult"/>
     </Grid>
 </Window>

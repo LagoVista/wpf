@@ -51,6 +51,8 @@ namespace LagoVista.Core.WPF.PlatformSupport
                 return _kvpStorage;
 
             _kvpStorage = await GetAsync<Dictionary<string, object>>("KVPSTORAGE.DAT");
+            if (_kvpStorage == null)
+                _kvpStorage = new Dictionary<string, object>();
 
             return _kvpStorage;
         }

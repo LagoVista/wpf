@@ -10,8 +10,8 @@
     <iconUrl>http://bytemaster.blob.core.windows.net/icons/LagoVistaIcon.png</iconUrl>
     <description>Core Functionality to build WPF Applications on the LagoVista IoT and Devices Framework.</description>
     <releaseNotes>Initial Release</releaseNotes>
-    <copyright>Copyright 2011</copyright>
-    <tags>HomeAutomation IoT UWP</tags>
+    <copyright>Copyright 2017</copyright>
+    <tags>HomeAutomation IoT WPF</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="9.0.1" />
       <dependency id="LagoVista.Core" version="0.8.0" />
