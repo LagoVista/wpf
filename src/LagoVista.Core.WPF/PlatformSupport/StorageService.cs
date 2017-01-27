@@ -18,7 +18,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
         private String GetAppDataDirectory(Locations location = Locations.Default)
         {
             var name = Process.GetCurrentProcess().ProcessName;
-          
+
             var dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
             if (location == Locations.Temp)
@@ -87,7 +87,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
                 fileName = GetAppRelativeFileNameIfNecessary(fileName, location);
             }
 
-            if(System.IO.File.Exists(fileName))
+            if (System.IO.File.Exists(fileName))
             {
                 var file = System.IO.File.OpenRead(fileName);
                 return Task.FromResult(file as Stream);
@@ -117,7 +117,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
         public async Task<T> GetKVPAsync<T>(string key, T defaultValue = null) where T : class
         {
             var dictionary = await GetDictionary();
-            if(dictionary.ContainsKey(key))
+            if (dictionary.ContainsKey(key))
             {
                 return dictionary[key] as T;
             }
@@ -133,7 +133,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
             return (dictionary.ContainsKey(key));
         }
 
-        public Task<string> StoreAsync(Stream stream,  string fileName, Locations location = Locations.Default, string folder = "")
+        public Task<string> StoreAsync(Stream stream, string fileName, Locations location = Locations.Default, string folder = "")
         {
             if (!String.IsNullOrEmpty(folder))
             {
@@ -173,7 +173,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
         public async Task StoreKVP<T>(string key, T value) where T : class
         {
             var dictionary = await GetDictionary();
-            if(dictionary.ContainsKey(key))
+            if (dictionary.ContainsKey(key))
             {
                 dictionary.Remove(key);
             }
@@ -217,16 +217,26 @@ namespace LagoVista.Core.WPF.PlatformSupport
             return Task.FromResult(fileName);
         }
 
-        
 
-        public Task<List<string>> ReadAllBytesAsync(string fileName)
+
+        public Task<byte[]> ReadAllBytesAsync(string fileName)
         {
-            throw new NotImplementedException();
+            fileName = GetAppRelativeFileNameIfNecessary(fileName);
+            if (System.IO.File.Exists(fileName))
+            {
+                return Task.FromResult(System.IO.File.ReadAllBytes(fileName));
+            }
+            else
+            {
+                return Task.FromResult(default(byte[]));
+            }
         }
 
-        public Task<string> WriteAllBytesAsync(string fileName, List<string> text)
+        public Task<string> WriteAllBytesAsync(string fileName, byte[] buffer)
         {
-            throw new NotImplementedException();
+            fileName = GetAppRelativeFileNameIfNecessary(fileName);
+            System.IO.File.WriteAllBytes(fileName, buffer);
+            return Task.FromResult(fileName);
         }
     }
 }

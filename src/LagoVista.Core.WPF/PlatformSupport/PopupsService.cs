@@ -14,7 +14,8 @@ namespace LagoVista.Core.WPF.PlatformSupport
         {
             var tcs = new System.Threading.Tasks.TaskCompletionSource<bool>();
 
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 var result = MessageBox.Show(prompt, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes;
                 tcs.SetResult(result);
             });
@@ -22,36 +23,62 @@ namespace LagoVista.Core.WPF.PlatformSupport
             return tcs.Task;
         }
 
-        public Task<decimal?> PromptForDecimalAsync(string label, decimal defaultvalue = 0)
+        public Task<decimal?> PromptForDecimalAsync(string label,  decimal? defaultvalue = 0, string help = "", bool isRequried = false)
         {
             var tcs = new TaskCompletionSource<Decimal?>();
-            Task.Run(() =>
+            var promptWindow = new UI.PromptDialog<decimal>();
+            promptWindow.Title = label;
+            promptWindow.Help = help;
+            promptWindow.isRequired = isRequried;
+            promptWindow.DecimalVaue = defaultvalue;
+            promptWindow.Show();
+            promptWindow.Closed += (sndr, args) =>
             {
-                var promptWindow = new UI.PromptDialog();
-                promptWindow.Show();
-                promptWindow.Closed += (sndr, args) =>
-                {
-                    tcs.SetResult(null);
-                };
-            });
+                tcs.SetResult(promptWindow.DecimalVaue);
+            };
             return tcs.Task;
         }
-     
-        public Task<int?> PromptForIntAsync(string label, int defaultvalue = 0)
+
+        public Task<int?> PromptForIntAsync(string label, int? defaultvalue = 0, string help = "", bool isRequried = false)
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<int?>();
+            var promptWindow = new UI.PromptDialog<int>();
+            promptWindow.Title = label;
+            promptWindow.Help = help;
+            promptWindow.isRequired = isRequried;
+            promptWindow.IntValue = defaultvalue;
+            promptWindow.Show();
+            promptWindow.Closed += (sndr, args) =>
+            {
+                tcs.SetResult(promptWindow.IntValue);
+            };
+
+            return tcs.Task;
         }
 
-        public Task<string> PromptForStringAsync(string label, string defaultvalue = "")
+        public Task<string> PromptForStringAsync(string label, string defaultvalue = "", string help = "", bool isRequried = false)
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<string>();
+            var promptWindow = new UI.PromptDialog<string>();
+            promptWindow.Title = label;
+            promptWindow.Help = help;
+            promptWindow.isRequired = isRequried;
+            promptWindow.StringValue = defaultvalue;
+            promptWindow.Show();
+            promptWindow.Closed += (sndr, args) =>
+            {
+                tcs.SetResult(promptWindow.StringValue);
+            };
+
+            return tcs.Task;
         }
 
         public Task ShowAsync(string message)
         {
             var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 MessageBox.Show(message);
                 tcs.SetResult(null);
             });
@@ -63,7 +90,8 @@ namespace LagoVista.Core.WPF.PlatformSupport
         {
             var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 MessageBox.Show(message, title);
                 tcs.SetResult(null);
             });
@@ -71,7 +99,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
             return tcs.Task;
         }
 
-        public Task<string> ShowOpenFileAsync( string fileMask = "")
+        public Task<string> ShowOpenFileAsync(string fileMask = "")
         {
             throw new NotImplementedException();
         }

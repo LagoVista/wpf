@@ -21,6 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{279F746B-B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagoVista.Core.WpfSupport.Test", "test\LagoVista.Core.WpfSupport.Test\LagoVista.Core.WpfSupport.Test.csproj", "{52B6C473-EE1B-4475-8007-B3099A010381}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagoVista.Core.WpfSupport.TestApp", "Test\LagoVista.Core.WpfSupport.TestApp\LagoVista.Core.WpfSupport.TestApp.csproj", "{0CB01771-4DB4-4148-A52A-2D04E0473F41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagoVista.Core.WPF.UI", "src\LagoVista.Core.WPF.UI\LagoVista.Core.WPF.UI.csproj", "{6954E095-192F-43CB-89A2-FF8DCC481534}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{52B6C473-EE1B-4475-8007-B3099A010381}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52B6C473-EE1B-4475-8007-B3099A010381}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52B6C473-EE1B-4475-8007-B3099A010381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CB01771-4DB4-4148-A52A-2D04E0473F41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CB01771-4DB4-4148-A52A-2D04E0473F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CB01771-4DB4-4148-A52A-2D04E0473F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CB01771-4DB4-4148-A52A-2D04E0473F41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6954E095-192F-43CB-89A2-FF8DCC481534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6954E095-192F-43CB-89A2-FF8DCC481534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6954E095-192F-43CB-89A2-FF8DCC481534}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6954E095-192F-43CB-89A2-FF8DCC481534}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8012CA72-39A5-43D8-9476-BED0F1DBE6D9} = {7E766088-4C09-41EE-A890-51E991BFACED}
 		{52B6C473-EE1B-4475-8007-B3099A010381} = {279F746B-BDA0-4B25-B268-FECE9B0911E3}
+		{0CB01771-4DB4-4148-A52A-2D04E0473F41} = {279F746B-BDA0-4B25-B268-FECE9B0911E3}
+		{6954E095-192F-43CB-89A2-FF8DCC481534} = {7E766088-4C09-41EE-A890-51E991BFACED}
 	EndGlobalSection
 EndGlobal
