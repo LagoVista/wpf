@@ -16,7 +16,8 @@ namespace LagoVista.Core.WPF.PlatformSupport
         {
             SLWIOC.Register<IDispatcherServices>(new DispatcherServices(dispatcher));
             SLWIOC.Register<IPopupServices>(new PopupsService());
-            SLWIOC.Register<IStorageService>(new Storage());
+            SLWIOC.Register<IStorageService>(new StorageService());
+            SLWIOC.Register<IDirectoryServices>(new DirectoryService());
             SLWIOC.Register<ILogger>(new Logger());
             SLWIOC.Register<ISerialPort>(new SerialPort());
             SLWIOC.Register<INetworkService>(new NetworkService());

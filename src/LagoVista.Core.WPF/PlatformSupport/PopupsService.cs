@@ -22,12 +22,22 @@ namespace LagoVista.Core.WPF.PlatformSupport
             return tcs.Task;
         }
 
-        public Task<decimal> PromptForDecimalAsync(string label, decimal defaultvalue = 0)
+        public Task<decimal?> PromptForDecimalAsync(string label, decimal defaultvalue = 0)
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<Decimal?>();
+            Task.Run(() =>
+            {
+                var promptWindow = new UI.PromptDialog();
+                promptWindow.Show();
+                promptWindow.Closed += (sndr, args) =>
+                {
+                    tcs.SetResult(null);
+                };
+            });
+            return tcs.Task;
         }
-
-        public Task<int> PromptForIntAsync(string label, int defaultvalue = 0)
+     
+        public Task<int?> PromptForIntAsync(string label, int defaultvalue = 0)
         {
             throw new NotImplementedException();
         }
@@ -61,12 +71,12 @@ namespace LagoVista.Core.WPF.PlatformSupport
             return tcs.Task;
         }
 
-        public Task<string> ShowOpenFileAsync(string previousDirectory, string fileMask = "")
+        public Task<string> ShowOpenFileAsync( string fileMask = "")
         {
             throw new NotImplementedException();
         }
 
-        public Task<string> ShowSaveFileAsync(string previousDirectory, string fileMask = "")
+        public Task<string> ShowSaveFileAsync(string defaultFileName = "", string fileMask = "")
         {
             throw new NotImplementedException();
         }
