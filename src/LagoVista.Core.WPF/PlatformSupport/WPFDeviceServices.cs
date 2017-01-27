@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace LagoVista.Common.WPF.PlatformSupport
+namespace LagoVista.Core.WPF.PlatformSupport
 {
     public class WPFDeviceServices
     {
@@ -18,6 +18,7 @@ namespace LagoVista.Common.WPF.PlatformSupport
             SLWIOC.Register<IPopupServices>(new PopupsService());
             SLWIOC.Register<IStorageService>(new Storage());
             SLWIOC.Register<ILogger>(new Logger());
+            SLWIOC.Register<ISerialPort>(new SerialPort());
             SLWIOC.Register<INetworkService>(new NetworkService());
         }
     }

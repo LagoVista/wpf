@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using LagoVista.Core.Models;
 
-namespace LagoVista.Common.WPF.PlatformSupport
+namespace LagoVista.Core.WPF.PlatformSupport
 {
     public class NetworkService : INetworkService
     {

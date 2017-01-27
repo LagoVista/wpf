@@ -7,10 +7,11 @@
     <ProjectGuid>{8012CA72-39A5-43D8-9476-BED0F1DBE6D9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LagoVista.Common.WPF</RootNamespace>
-    <AssemblyName>LagoVista.Common.WPF</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>LagoVista.Core.WPF</RootNamespace>
+    <AssemblyName>LagoVista.Core.WPF</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,11 +32,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LagoVista.Core, Version=1.1.0.32, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\LagoVista.Core.0.8.56-alpha00719\lib\portable46-net451+win81\LagoVista.Core.dll</HintPath>
+      <HintPath>..\..\packages\LagoVista.Core.0.8.56-alpha01128\lib\portable46-net451+win81\LagoVista.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\LagoVista.IoT\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -51,12 +52,14 @@
     <Compile Include="PlatformSupport\Logger..cs" />
     <Compile Include="PlatformSupport\NetworkService.cs" />
     <Compile Include="PlatformSupport\PopupsService.cs" />
+    <Compile Include="PlatformSupport\SerialPort.cs" />
     <Compile Include="PlatformSupport\Storage.cs" />
     <Compile Include="PlatformSupport\WPFDeviceServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Package.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

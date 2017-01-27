@@ -5,19 +5,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LagoVista.Core.PlatformSupport;
+using Newtonsoft.Json;
+using System.Net.Http;
 
-namespace LagoVista.Common.WPF.PlatformSupport
+namespace LagoVista.Core.WPF.PlatformSupport
 {
     public class Storage : LagoVista.Core.PlatformSupport.IStorageService
     {
-        public Task ClearKVP(string key)
+        Dictionary<String, Object> _kvpStorage;
+
+        private async Task<Dictionary<string, object>> GetDictionary()
         {
-            throw new NotImplementedException();
+            if (_kvpStorage != null)
+                return _kvpStorage;
+
+            _kvpStorage = await GetAsync<Dictionary<string, object>>("KVPSTORAGE.DAT");
+
+            return _kvpStorage;
         }
 
-        public Task<Stream> Get(Uri rui)
+
+        public async Task ClearKVP(string key)
         {
-            throw new NotImplementedException();
+            (await GetDictionary()).Clear();
+        }
+
+        public Task<Stream> Get(Uri uri)
+        {
+            var client = new HttpClient();
+            return client.GetStreamAsync(uri);
         }
 
         public Task<Stream> Get(Locations location, string fileName, string folder = "")
@@ -27,17 +43,36 @@ namespace LagoVista.Common.WPF.PlatformSupport
 
         public Task<TObject> GetAsync<TObject>(string fileName) where TObject : class
         {
-            throw new NotImplementedException();
+            if(System.IO.File.Exists(fileName))
+            {
+                var json = System.IO.File.ReadAllText(fileName);
+                var instance = JsonConvert.DeserializeObject<TObject>(json);
+
+                return Task.FromResult(instance);
+            }
+            else
+            {
+                return Task.FromResult(default(TObject));
+            }
         }
 
-        public Task<T> GetKVPAsync<T>(string key, T defaultValue = null) where T : class
+        public async Task<T> GetKVPAsync<T>(string key, T defaultValue = null) where T : class
         {
-            throw new NotImplementedException();
+            var dictionary = await GetDictionary();
+            if(dictionary.ContainsKey(key))
+            {
+                return dictionary[key] as T;
+            }
+            else
+            {
+                return defaultValue;
+            }
         }
 
-        public Task<bool> HasKVPAsync(string key)
+        public async Task<bool> HasKVPAsync(string key)
         {
-            throw new NotImplementedException();
+            var dictionary = await GetDictionary();
+            return (dictionary.ContainsKey(key));
         }
 
         public Task<Uri> StoreAsync(Stream stream, Locations location, string fileName, string folder = "")
@@ -47,12 +82,22 @@ namespace LagoVista.Common.WPF.PlatformSupport
 
         public Task StoreAsync<TObject>(TObject instance, string fileName) where TObject : class
         {
-            throw new NotImplementedException();
+            var json = JsonConvert.SerializeObject(instance);
+            System.IO.File.WriteAllText(fileName, json);
+
+            return Task.FromResult(default(object));
         }
 
-        public Task StoreKVP<T>(string key, T value) where T : class
+        public async Task StoreKVP<T>(string key, T value) where T : class
         {
-            throw new NotImplementedException();
+            var dictionary = await GetDictionary();
+            if(dictionary.ContainsKey(key))
+            {
+                dictionary.Remove(key);
+            }
+
+            dictionary.Add(key, value);
+            
         }
     }
 }

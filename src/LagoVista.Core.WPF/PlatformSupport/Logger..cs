@@ -6,14 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LagoVista.Common.WPF.PlatformSupport
+namespace LagoVista.Core.WPF.PlatformSupport
 {
-    class Logger : ILogger
+    public class Logger : ILogger
     {
         public void Log(LogLevel level, string area, string message, params KeyValuePair<string, string>[] args)
         {
+            Debug.WriteLine("=================================================");
+            Debug.WriteLine("LEVEL      : " + level);
             Debug.WriteLine("AREA       : " + area);
-            Debug.WriteLine("Message       : " + message);
+            Debug.WriteLine("Message    : " + message);
+            Debug.WriteLine("=================================================");
         }
 
         public void LogException(string area, Exception ex, params KeyValuePair<string, string>[] args)

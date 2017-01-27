@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace LagoVista.Common.WPF.PlatformSupport
+namespace LagoVista.Core.WPF.PlatformSupport
 {
     public class PopupsService : IPopupServices
     {
@@ -20,6 +20,21 @@ namespace LagoVista.Common.WPF.PlatformSupport
             });
 
             return tcs.Task;
+        }
+
+        public Task<decimal> PromptForDecimalAsync(string label, decimal defaultvalue = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> PromptForIntAsync(string label, int defaultvalue = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> PromptForStringAsync(string label, string defaultvalue = "")
+        {
+            throw new NotImplementedException();
         }
 
         public Task ShowAsync(string message)
@@ -44,6 +59,16 @@ namespace LagoVista.Common.WPF.PlatformSupport
             });
 
             return tcs.Task;
+        }
+
+        public Task<string> ShowOpenFileAsync(string previousDirectory, string fileMask = "")
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> ShowSaveFileAsync(string previousDirectory, string fileMask = "")
+        {
+            throw new NotImplementedException();
         }
     }
 }
