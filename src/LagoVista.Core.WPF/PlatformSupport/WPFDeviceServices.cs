@@ -19,7 +19,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
             SLWIOC.Register<IStorageService>(new StorageService());
             SLWIOC.Register<IDirectoryServices>(new DirectoryService());
             SLWIOC.Register<ILogger>(new Logger());
-            SLWIOC.Register<ISerialPort>(new SerialPort());
+            SLWIOC.Register<IDeviceManager>(new DeviceManager());
             SLWIOC.Register<INetworkService>(new NetworkService());
         }
     }

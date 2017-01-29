@@ -11,6 +11,11 @@ namespace LagoVista.Core.WPF.PlatformSupport
 {
     public class DeviceManager : IDeviceManager
     {
+        public ISerialPort CreateSerialPort(SerialPortInfo portInfo)
+        {            
+            return new SerialPort();
+        }
+
         public  Task<ObservableCollection<SerialPortInfo>> GetSerialPortsAsync()
         {
             var ports = new ObservableCollection<SerialPortInfo>();
