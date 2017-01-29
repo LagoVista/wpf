@@ -9,6 +9,12 @@ namespace LagoVista.Core.WPF.PlatformSupport
     public class SerialPort : ISerialPort
     {
         System.IO.Ports.SerialPort _serialPort;
+        SerialPortInfo _portInfo;
+
+        public SerialPort(SerialPortInfo portInfo)
+        {
+            _portInfo = portInfo;
+        }
 
         public bool IsConnected
         {
@@ -49,13 +55,13 @@ namespace LagoVista.Core.WPF.PlatformSupport
             }
         }
 
-        public Task<Stream> OpenAsync(SerialPortInfo serialPortInfo)
+        public Task<Stream> OpenAsync()
         {
             try
             {
                 lock (this)
                 {
-                    _serialPort = new System.IO.Ports.SerialPort(serialPortInfo.Id, serialPortInfo.BaudRate);
+                    _serialPort = new System.IO.Ports.SerialPort(_portInfo.Id, _portInfo.BaudRate);
                     _serialPort.Open();
 
                     return Task.FromResult(_serialPort.BaseStream);

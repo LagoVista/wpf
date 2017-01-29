@@ -13,7 +13,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
     {
         public ISerialPort CreateSerialPort(SerialPortInfo portInfo)
         {            
-            return new SerialPort();
+            return new SerialPort(portInfo);
         }
 
         public  Task<ObservableCollection<SerialPortInfo>> GetSerialPortsAsync()
