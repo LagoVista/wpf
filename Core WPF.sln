@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagoVista.Core.WpfSupport.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagoVista.Core.WpfSupport.TestApp", "Test\LagoVista.Core.WpfSupport.TestApp\LagoVista.Core.WpfSupport.TestApp.csproj", "{0CB01771-4DB4-4148-A52A-2D04E0473F41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagoVista.Core.WPF.UI", "src\LagoVista.Core.WPF.UI\LagoVista.Core.WPF.UI.csproj", "{6954E095-192F-43CB-89A2-FF8DCC481534}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF UI", "src\LagoVista.UI.WPF\WPF UI.csproj", "{6954E095-192F-43CB-89A2-FF8DCC481534}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

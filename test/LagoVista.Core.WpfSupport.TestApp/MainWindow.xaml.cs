@@ -161,8 +161,8 @@ namespace LagoVista.Core.WpfSupport.TestApp
             firstPort.BaudRate = 115200;
            
 
-            var port = new SerialPort();
-            var portToOpen= await port.OpenAsync(firstPort);
+            var port = new SerialPort(firstPort);
+            var portToOpen= await port.OpenAsync();
             if(firstPort != null)
             {
                 OpenPortResult.Text = firstPort.Name + " is open!";

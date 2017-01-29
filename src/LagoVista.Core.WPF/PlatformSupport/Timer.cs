@@ -15,7 +15,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
 
         public TimeSpan Interval { get; set; }
 
-        public bool InvokeOnUIThread { get; set; } = false;
+        public bool InvokeOnUIThread { get; set; }
 
         public object State { get; set; }
 

@@ -11,7 +11,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
     {
         public ITimer Create(TimeSpan interval)
         {
-            return new Timer() { Interval = interval };
+            return new Timer() { Interval = interval, InvokeOnUIThread = false };
         }
     }
 }

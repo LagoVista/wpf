@@ -4,7 +4,9 @@ Write-Output $scriptPath
 
 Set-Location $scriptPath
 
-#. ./BuildAll.ps1
+#TODO: Giving strange compile errors...need to manually rebuild Release config before packaging
+#$msbuild = "C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe"
+#& $msbuild  /t:Clean,Build /verbosity:q /p:Configuration=Release
 
 . ./UpdateNuspecVersion.ps1 -preRelease alpha -major 0 -minor 8
 

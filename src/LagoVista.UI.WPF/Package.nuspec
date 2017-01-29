@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>LagoVista.Core.WPF</id>
+    <id>LagoVista.WPF.UI</id>
     <version>0.8.59-alpha00595</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
@@ -15,11 +15,12 @@
     <dependencies>
       <dependency id="Newtonsoft.Json" version="9.0.1" />
       <dependency id="LagoVista.Core" version="0.8.0" />
+      <dependency id="LagoVista.Core.Wpf" version="0.8.0" />
     </dependencies>
   </metadata>
   <files>
     <file src="readme.txt" target="" />
-    <file src="bin\Release\LagoVista.Core.WPF.dll" target="lib\451" />
-    <file src="bin\Release\LagoVista.Core.WPF.pdb" target="lib\451" />
+    <file src="bin\Release\LagoVista.WPF.UI.dll" target="lib\451" />
+    <file src="bin\Release\LagoVista.WPF.UI.pdb" target="lib\451" />
   </files>
 </package>
