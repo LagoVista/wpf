@@ -35,6 +35,11 @@ namespace LagoVista.Core.WPF.PlatformSupport
 
         private void Timer_Elapsed(object state)
         {
+            if(_timer == null)
+            {
+                return;
+            }
+
             if(InvokeOnUIThread)
             {
                 Object objDispatcher;
@@ -62,8 +67,11 @@ namespace LagoVista.Core.WPF.PlatformSupport
 
         public void Stop()
         {
-            _timer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
-            Dispose();
+            if (_timer != null)
+            {
+                _timer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
+                Dispose();
+            }
         }
     }
 }
