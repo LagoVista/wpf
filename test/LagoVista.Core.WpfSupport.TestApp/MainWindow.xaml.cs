@@ -162,13 +162,13 @@ namespace LagoVista.Core.WpfSupport.TestApp
            
 
             var port = new SerialPort(firstPort);
-            var portToOpen= await port.OpenAsync();
-            if(firstPort != null)
+            try
             {
+                await port.OpenAsync();
                 OpenPortResult.Text = firstPort.Name + " is open!";
             }
-            else
-            {
+            catch(Exception)
+            { 
                 OpenPortResult.Text = "Could not open port" + firstPort.Name;
             }
 
