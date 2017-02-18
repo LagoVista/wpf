@@ -62,7 +62,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
 
         public void Start()
         {
-            _timer = new System.Threading.Timer(Timer_Elapsed, null, 0, Convert.ToInt32(Interval.TotalMilliseconds));
+            _timer = new System.Threading.Timer(Timer_Elapsed, null, Convert.ToInt32(Interval.TotalMilliseconds), Convert.ToInt32(Interval.TotalMilliseconds));
         }
 
         public void Stop()

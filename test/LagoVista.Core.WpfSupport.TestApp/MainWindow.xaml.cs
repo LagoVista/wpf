@@ -75,7 +75,9 @@ namespace LagoVista.Core.WpfSupport.TestApp
         private void StartTimer_Click(object sender, RoutedEventArgs e)
         {
             var timerFactory = new TimerFactory();
-            _timer = timerFactory.Create(TimeSpan.FromSeconds(1));
+            _timer = timerFactory.Create(TimeSpan.FromSeconds(5));
+
+            StartTimerResult.Text = "Timer Started";
 
             _timer.InvokeOnUIThread = true;
             _timer.Tick += _timer_Tick;
@@ -162,7 +164,7 @@ namespace LagoVista.Core.WpfSupport.TestApp
            
 
             var port = new SerialPort(firstPort);
-            var portToOpen= await port.OpenAsync();
+            await port.OpenAsync();
             if(firstPort != null)
             {
                 OpenPortResult.Text = firstPort.Name + " is open!";

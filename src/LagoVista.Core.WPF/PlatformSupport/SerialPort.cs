@@ -32,6 +32,22 @@ namespace LagoVista.Core.WPF.PlatformSupport
             }
         }
 
+        public Stream InputStream
+        {
+            get 
+            {
+                return _serialPort == null ? null : _serialPort.BaseStream;
+            }
+        }
+
+        public Stream OutputStream
+        {
+            get
+            {
+                return _serialPort == null ? null : _serialPort.BaseStream;
+            }
+        }
+
         public Task CloseAsync()
         {
             Dispose();
@@ -55,7 +71,9 @@ namespace LagoVista.Core.WPF.PlatformSupport
             }
         }
 
-        public Task<Stream> OpenAsync()
+
+
+        public Task OpenAsync()
         {
             try
             {
