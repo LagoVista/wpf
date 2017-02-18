@@ -34,9 +34,12 @@ namespace LagoVista.Core.WPF.PlatformSupport
 
         public Stream InputStream
         {
-            get 
+            get
             {
-                return _serialPort == null ? null : _serialPort.BaseStream;
+                if (_serialPort == null)
+                    throw new InvalidOperationException("Serial Port Not Open");
+
+                return _serialPort.BaseStream;
             }
         }
 
@@ -44,7 +47,10 @@ namespace LagoVista.Core.WPF.PlatformSupport
         {
             get
             {
-                return _serialPort == null ? null : _serialPort.BaseStream;
+                if (_serialPort == null)
+                    throw new InvalidOperationException("Serial Port Not Open");
+
+                return _serialPort.BaseStream;
             }
         }
 
@@ -58,8 +64,6 @@ namespace LagoVista.Core.WPF.PlatformSupport
         {
             lock (this)
             {
-
-                { }
                 if (_serialPort != null)
                 {
                     if (_serialPort.IsOpen)
@@ -71,8 +75,6 @@ namespace LagoVista.Core.WPF.PlatformSupport
             }
         }
 
-
-
         public Task OpenAsync()
         {
             try
@@ -82,13 +84,13 @@ namespace LagoVista.Core.WPF.PlatformSupport
                     _serialPort = new System.IO.Ports.SerialPort(_portInfo.Id, _portInfo.BaudRate);
                     _serialPort.Open();
 
-                    return Task.FromResult(_serialPort.BaseStream);
+                    return Task.FromResult(default(object));
                 }
             }
             catch (Exception)
             {
                 _serialPort = null;
-                return Task.FromResult(default(Stream));
+                throw new Exception("Could not open serial port.");
             }
         }
     }
