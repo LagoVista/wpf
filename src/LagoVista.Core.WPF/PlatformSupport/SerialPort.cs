@@ -87,10 +87,10 @@ namespace LagoVista.Core.WPF.PlatformSupport
                     return Task.FromResult(default(object));
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 _serialPort = null;
-                throw new Exception("Could not open serial port.");
+                throw new Exception("Could not open serial port.",ex);
             }
         }
     }

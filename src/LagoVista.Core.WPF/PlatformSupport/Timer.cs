@@ -13,6 +13,8 @@ namespace LagoVista.Core.WPF.PlatformSupport
     {
         System.Threading.Timer _timer;
 
+        public String _timerKey;
+
         public TimeSpan Interval { get; set; }
 
         public bool InvokeOnUIThread { get; set; }
@@ -40,6 +42,16 @@ namespace LagoVista.Core.WPF.PlatformSupport
                 return;
             }
 
+            if(state == null)
+            {
+                return;
+            }
+
+            if(state.ToString() != _timerKey)
+            {
+                return;
+            }
+
             if(InvokeOnUIThread)
             {
                 Object objDispatcher;
@@ -62,13 +74,15 @@ namespace LagoVista.Core.WPF.PlatformSupport
 
         public void Start()
         {
-            _timer = new System.Threading.Timer(Timer_Elapsed, null, Convert.ToInt32(Interval.TotalMilliseconds), Convert.ToInt32(Interval.TotalMilliseconds));
+            _timerKey = Guid.NewGuid().ToString();
+            _timer = new System.Threading.Timer(Timer_Elapsed, _timerKey, Convert.ToInt32(Interval.TotalMilliseconds), Convert.ToInt32(Interval.TotalMilliseconds));
         }
 
         public void Stop()
         {
             if (_timer != null)
             {
+                _timerKey = null;
                 _timer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
                 Dispose();
             }
