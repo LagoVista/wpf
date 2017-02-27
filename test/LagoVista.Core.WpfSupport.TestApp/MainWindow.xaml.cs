@@ -31,7 +31,7 @@ namespace LagoVista.Core.WpfSupport.TestApp
             SLWIOC.RegisterSingleton<IDispatcherServices>(new DispatcherServices(this.Dispatcher));
             SLWIOC.RegisterSingleton<IStorageService>(new StorageService());
         }
-        
+
 
         private async void SaveFile_Click(object sender, RoutedEventArgs e)
         {
@@ -39,7 +39,7 @@ namespace LagoVista.Core.WpfSupport.TestApp
             var result = await popup.ShowSaveFileAsync("default.txt", "TextFile|*.txt");
             if (!String.IsNullOrEmpty(result))
             {
-               SaveFileResult.Text = result;
+                SaveFileResult.Text = result;
             }
             else
             {
@@ -51,7 +51,7 @@ namespace LagoVista.Core.WpfSupport.TestApp
         {
             var popup = new PopupsService();
             var result = await popup.ShowOpenFileAsync();
-            if(!String.IsNullOrEmpty(result))
+            if (!String.IsNullOrEmpty(result))
             {
                 OpenFileResult.Text = result;
             }
@@ -117,7 +117,7 @@ namespace LagoVista.Core.WpfSupport.TestApp
         {
             var popup = new PopupsService();
             var result = (await popup.PromptForDoubleAsync("Get me a decimal", 42.5));
-            if(result.HasValue)
+            if (result.HasValue)
             {
                 SetDecimalResult.Text = result.Value.ToString();
             }
@@ -146,7 +146,7 @@ namespace LagoVista.Core.WpfSupport.TestApp
             var portMessage = String.Empty;
             var deviceManager = new DeviceManager();
             var ports = await deviceManager.GetSerialPortsAsync();
-            foreach(var port in ports)
+            foreach (var port in ports)
             {
                 portMessage += port.Name + "; ";
             }
@@ -161,7 +161,7 @@ namespace LagoVista.Core.WpfSupport.TestApp
             var ports = await deviceManager.GetSerialPortsAsync();
             var firstPort = ports.First();
             firstPort.BaudRate = 115200;
-           
+
 
             var port = new SerialPort(firstPort);
             try
@@ -169,8 +169,8 @@ namespace LagoVista.Core.WpfSupport.TestApp
                 await port.OpenAsync();
                 OpenPortResult.Text = firstPort.Name + " is open!";
             }
-            catch(Exception)
-            { 
+            catch (Exception)
+            {
                 OpenPortResult.Text = "Could not open port" + firstPort.Name;
             }
 
@@ -179,6 +179,12 @@ namespace LagoVista.Core.WpfSupport.TestApp
         private void ClosePort_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private async void ShowAlert_Click(object sender, RoutedEventArgs e)
+        {
+            var popup = new PopupsService();
+            await popup.ShowAsync("Note", "A longer message, potentially on more than one  line");
         }
     }
 }

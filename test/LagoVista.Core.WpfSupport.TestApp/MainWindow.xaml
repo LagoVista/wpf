@@ -19,6 +19,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -47,5 +48,7 @@
         <TextBlock  Grid.Row="9" Grid.Column="1" Text="Decimal Result: - " x:Name="OpenPortResult"/>
         <Button Grid.Row="10" Content="Close Port" x:Name="ClosePort" Click="ClosePort_Click" />
         <TextBlock  Grid.Row="10" Grid.Column="1" Text="Decimal Result: - " x:Name="ClosePortResult"/>
+        <Button Grid.Row="11" Content="ShowAlert" x:Name="ShowAlert" Click="ShowAlert_Click"/>
+        <TextBlock  Grid.Row="11" Grid.Column="1" Text="" x:Name="ShowAlertResult"/>
     </Grid>
 </Window>

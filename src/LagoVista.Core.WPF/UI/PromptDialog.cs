@@ -55,10 +55,14 @@ namespace LagoVista.Core.WPF.UI
             _textInput.SetValue(Grid.RowProperty, 1);
             _textInput.SetValue(Grid.ColumnSpanProperty, 3);
             _textInput.Margin = new Thickness(8);
+            _help.TextWrapping = TextWrapping.Wrap;
+
             container.Children.Add(_textInput);
 
             this.WindowStyle = WindowStyle.ToolWindow;
 
+
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             if (typeof(T) == typeof(int))
             {
@@ -71,6 +75,9 @@ namespace LagoVista.Core.WPF.UI
                 _textInput.TextAlignment = TextAlignment.Right;
                 Masking.SetMask(_textInput, @"^[0-9]+\.?([0-9][0-9]?)?$");
             }
+
+
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)

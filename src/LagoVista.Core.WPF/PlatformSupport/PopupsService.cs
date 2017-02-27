@@ -26,7 +26,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
             return tcs.Task;
         }
 
-        public Task<double?> PromptForDoubleAsync(string label,  double? defaultvalue = 0, string help = "", bool isRequried = false)
+        public Task<double?> PromptForDoubleAsync(string label, double? defaultvalue = 0, string help = "", bool isRequried = false)
         {
             var promptWindow = new UI.PromptDialog<decimal>();
             promptWindow.Title = label;
@@ -34,7 +34,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
             promptWindow.isRequired = isRequried;
             promptWindow.DoubleValue = defaultvalue;
             var result = promptWindow.ShowDialog();
-            if(result.HasValue && result.Value)
+            if (result.HasValue && result.Value)
             {
                 return Task.FromResult(promptWindow.DoubleValue);
             }
@@ -51,7 +51,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
             promptWindow.Help = help;
             promptWindow.isRequired = isRequried;
             promptWindow.IntValue = defaultvalue;
-            
+
             var result = promptWindow.ShowDialog();
             if (result.HasValue && result.Value)
             {
@@ -99,11 +99,11 @@ namespace LagoVista.Core.WPF.PlatformSupport
         {
             var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
-            Task.Run(() =>
-            {
-                MessageBox.Show(message, title);
-                tcs.SetResult(null);
-            });
+            var dialog = new UI.MessageDialog();
+            dialog.Title = title;
+            dialog.Help = message;
+            dialog.ShowDialog();
+            tcs.SetResult(null);
 
             return tcs.Task;
         }
@@ -124,7 +124,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
             }
 
             var openFileDialog = new OpenFileDialog();
-            if(!String.IsNullOrEmpty(fileMask))
+            if (!String.IsNullOrEmpty(fileMask))
             {
                 openFileDialog.Filter = fileMask;
             }
@@ -133,7 +133,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
                 openFileDialog.Filter = "All Files|*.*";
             }
 
-            if(!String.IsNullOrEmpty(_lastOpenDirectory))
+            if (!String.IsNullOrEmpty(_lastOpenDirectory))
             {
                 openFileDialog.InitialDirectory = _lastOpenDirectory;
             }
@@ -143,7 +143,7 @@ namespace LagoVista.Core.WPF.PlatformSupport
             }
 
             var result = openFileDialog.ShowDialog();
-            if(result.HasValue && result.Value)
+            if (result.HasValue && result.Value)
             {
                 var fn = openFileDialog.FileName;
                 var fileInfo = new FileInfo(openFileDialog.FileName);
