@@ -99,10 +99,14 @@ namespace LagoVista.Core.WPF.PlatformSupport
         {
             var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
-            var dialog = new UI.MessageDialog();
-            dialog.Title = title;
-            dialog.Help = message;
-            dialog.ShowDialog();
+            var promptWindow = new UI.PromptDialog<string>();
+
+            promptWindow.Title = title;
+            promptWindow.Help = message;
+            promptWindow.TextInputVisible = false;
+            promptWindow.CancelButtonVisible = false;
+           
+            promptWindow.ShowDialog();
             tcs.SetResult(null);
 
             return tcs.Task;

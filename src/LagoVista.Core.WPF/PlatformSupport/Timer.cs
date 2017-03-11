@@ -29,6 +29,8 @@ namespace LagoVista.Core.WPF.PlatformSupport
             {
                 if (_timer != null)
                 {
+                    _timerKey = null;
+                    _timer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
                     _timer.Dispose();
                     _timer = null;
                 }
@@ -37,22 +39,15 @@ namespace LagoVista.Core.WPF.PlatformSupport
 
         private void Timer_Elapsed(object state)
         {
-            if(_timer == null)
+            if (_timer == null || state == null || state.ToString() != _timerKey)
             {
+                if (_timerKey != null)
+                    Dispose();
+
                 return;
             }
 
-            if(state == null)
-            {
-                return;
-            }
-
-            if(state.ToString() != _timerKey)
-            {
-                return;
-            }
-
-            if(InvokeOnUIThread)
+            if (InvokeOnUIThread)
             {
                 Object objDispatcher;
 
@@ -68,24 +63,24 @@ namespace LagoVista.Core.WPF.PlatformSupport
             }
             else
             {
-                Tick?.Invoke(this, null); 
+                Tick?.Invoke(this, null);
             }
         }
 
         public void Start()
         {
+            if (_timer != null)
+            {
+                Dispose();
+            }
+
             _timerKey = Guid.NewGuid().ToString();
             _timer = new System.Threading.Timer(Timer_Elapsed, _timerKey, Convert.ToInt32(Interval.TotalMilliseconds), Convert.ToInt32(Interval.TotalMilliseconds));
         }
 
         public void Stop()
         {
-            if (_timer != null)
-            {
-                _timerKey = null;
-                _timer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
-                Dispose();
-            }
+            Dispose();
         }
     }
 }

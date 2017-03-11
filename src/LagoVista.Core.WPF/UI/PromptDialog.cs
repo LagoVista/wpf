@@ -14,12 +14,15 @@ namespace LagoVista.Core.WPF.UI
         TextBox _textInput;
         TextBlock _help;
 
+        Button _okButton;
+        Button _cancelButton;
+
         public bool isRequired { get; set; }
 
         public PromptDialog()
         {
             Width = 200;
-            Height = 100;
+            Height = 160;
             var container = new Grid();
             container.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
             container.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
@@ -29,26 +32,27 @@ namespace LagoVista.Core.WPF.UI
             container.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             Content = container;
 
-            Button okButton = new Button();
-            okButton.Margin = new Thickness(4);
-            okButton.Content = "Done";
-            okButton.SetValue(Grid.ColumnProperty, 1);
-            okButton.SetValue(Grid.RowProperty, 2);
-            container.Children.Add(okButton);
-            okButton.Click += OkButton_Click;
+            _okButton = new Button();
+            _okButton.Margin = new Thickness(4);
+            _okButton.Content = "Ok";
+            _okButton.SetValue(Grid.ColumnProperty, 1);
+            _okButton.SetValue(Grid.RowProperty, 2);
+            container.Children.Add(_okButton);
+            _okButton.Click += OkButton_Click;
 
-            Button cancelButton = new Button();
-            cancelButton.Margin = new Thickness(4);
-            cancelButton.Content = "Cancel";
-            cancelButton.SetValue(Grid.ColumnProperty, 2);
-            cancelButton.SetValue(Grid.RowProperty, 2);
-            container.Children.Add(cancelButton);
-            cancelButton.Click += (sndr, args) => { DialogResult = false; Close(); };
+            _cancelButton = new Button();
+            _cancelButton.Margin = new Thickness(4);
+            _cancelButton.Content = "Cancel";
+            _cancelButton.SetValue(Grid.ColumnProperty, 2);
+            _cancelButton.SetValue(Grid.RowProperty, 2);
+            container.Children.Add(_cancelButton);
+            _cancelButton.Click += (sndr, args) => { DialogResult = false; Close(); };
 
             _help = new TextBlock();
             _help.Margin = new Thickness(8);
             _help.SetValue(Grid.ColumnSpanProperty, 3);
             _help.Visibility = Visibility.Collapsed;
+            _help.FontSize = 18;
             container.Children.Add(_help);
 
             _textInput = new TextBox();
@@ -60,7 +64,6 @@ namespace LagoVista.Core.WPF.UI
             container.Children.Add(_textInput);
 
             this.WindowStyle = WindowStyle.ToolWindow;
-
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
@@ -76,9 +79,39 @@ namespace LagoVista.Core.WPF.UI
                 Masking.SetMask(_textInput, @"^[0-9]+\.?([0-9][0-9]?)?$");
             }
 
-
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
         }
+
+        public bool TextInputVisible
+        {
+            get { return _textInput.Visibility == Visibility.Visible; }
+            set { _textInput.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
+        }
+        
+        public bool OkButtonVisible
+        {
+            get { return _okButton.Visibility == Visibility.Visible; }
+            set { _okButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public bool CancelButtonVisible
+        {
+            get { return _cancelButton.Visibility == Visibility.Visible; }
+            set { _cancelButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public string OkButtonCaption
+        {
+            get { return _okButton.Content.ToString(); }
+            set { _okButton.Content = value; }
+        }
+
+        public string CancelButtonCaption
+        {
+            get { return _cancelButton.Content.ToString(); }
+            set { _cancelButton.Content = value; }
+        }
+
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
@@ -114,12 +147,12 @@ namespace LagoVista.Core.WPF.UI
                 _help.Text = value;
                 if (String.IsNullOrEmpty(value))
                 {
-                    Height = 100;
+                    Height = 160;
                     _help.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
-                    Height = 130;
+                    Height = 190;
                     _help.Visibility = Visibility.Visible;
                 }
             }

@@ -64,12 +64,20 @@ namespace LagoVista.Core.WPF.PlatformSupport
         {
             lock (this)
             {
-                if (_serialPort != null)
+                try
                 {
-                    if (_serialPort.IsOpen)
-                        _serialPort.Close();
+                    if (_serialPort != null)
+                    {
+                        if (_serialPort.IsOpen)
+                            _serialPort.Close();
 
-                    _serialPort.Dispose();
+                        _serialPort.Dispose();
+                        _serialPort = null;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    /* NOP */
                     _serialPort = null;
                 }
             }

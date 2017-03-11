@@ -75,7 +75,7 @@ namespace LagoVista.Core.WpfSupport.TestApp
         private void StartTimer_Click(object sender, RoutedEventArgs e)
         {
             var timerFactory = new TimerFactory();
-            _timer = timerFactory.Create(TimeSpan.FromSeconds(5));
+            _timer = timerFactory.Create(TimeSpan.FromSeconds(2));
 
             StartTimerResult.Text = "Timer Started";
 
